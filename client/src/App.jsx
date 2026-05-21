@@ -1,122 +1,66 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { Toaster } from 'react-hot-toast'
+import { AuthProvider } from './context/AuthContext'
+import { CarritoProvider } from './context/CarritoContext'
+import Navbar from './components/Navbar'
+import Home from './pages/Home'
+import Productos from './pages/Productos'
+import Checkout from './pages/Checkout'
+import Login from './pages/Login'
+import MisPedidos from './pages/MisPedidos'
 
-function App() {
-  const [count, setCount] = useState(0)
-
+function Footer() {
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
+    <footer style={{ background: '#1A1A2E', color: '#9CA3AF', padding: '3rem 0 1.5rem', marginTop: '4rem' }}>
+      <div className="contenedor">
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '2rem', marginBottom: '2rem' }}>
+          <div>
+            <h3 style={{ color: 'white', fontFamily: "'Barlow Condensed', sans-serif", fontSize: '1.3rem', fontWeight: 800, marginBottom: '1rem' }}>FERRETERÍA SALCEDO</h3>
+            <p style={{ fontSize: '0.9rem', lineHeight: 1.6 }}>Tu ferretería de confianza en Lima. Más de 20 años sirviendo a la comunidad.</p>
+          </div>
+          <div>
+            <h4 style={{ color: 'white', fontWeight: 700, marginBottom: '1rem' }}>Contacto</h4>
+            <p style={{ fontSize: '0.9rem' }}>📍 Jr. Los Artesanos 245, Lima</p>
+            <p style={{ fontSize: '0.9rem' }}>📞 987-654-321</p>
+            <p style={{ fontSize: '0.9rem' }}>✉️ ventas@ferrreteriasalcedo.com</p>
+          </div>
+          <div>
+            <h4 style={{ color: 'white', fontWeight: 700, marginBottom: '1rem' }}>Horario</h4>
+            <p style={{ fontSize: '0.9rem' }}>Lunes a Sábado: 8am - 7pm</p>
+            <p style={{ fontSize: '0.9rem' }}>Domingo: 9am - 2pm</p>
+          </div>
+          <div>
+            <h4 style={{ color: 'white', fontWeight: 700, marginBottom: '1rem' }}>Pagos aceptados</h4>
+            <p style={{ fontSize: '0.9rem' }}>💜 Yape</p>
+            <p style={{ fontSize: '0.9rem' }}>💵 Efectivo</p>
+            <p style={{ fontSize: '0.9rem' }}>🏦 Transferencia bancaria</p>
+          </div>
         </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
+        <div style={{ borderTop: '1px solid #374151', paddingTop: '1.5rem', textAlign: 'center', fontSize: '0.85rem' }}>
+          © 2024 Ferretería Salcedo. Todos los derechos reservados.
         </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
-
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
+      </div>
+    </footer>
   )
 }
 
-export default App
+export default function App() {
+  return (
+    <BrowserRouter>
+      <AuthProvider>
+        <CarritoProvider>
+          <Toaster position="top-right" />
+          <Navbar />
+          <Routes>
+            <Route path="/"            element={<Home />} />
+            <Route path="/productos"   element={<Productos />} />
+            <Route path="/checkout"    element={<Checkout />} />
+            <Route path="/login"       element={<Login />} />
+            <Route path="/mis-pedidos" element={<MisPedidos />} />
+          </Routes>
+          <Footer />
+        </CarritoProvider>
+      </AuthProvider>
+    </BrowserRouter>
+  )
+}

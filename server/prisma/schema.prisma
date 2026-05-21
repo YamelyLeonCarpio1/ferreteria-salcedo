@@ -1,0 +1,182 @@
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Usuario {
+  id         Int       @id @default(autoincrement())
+  nombre     String
+  apellido   String
+  email      String    @unique
+  password   String
+  telefono   String?
+  rol        Rol       @default(CLIENTE)
+  activo     Boolean   @default(true)
+  creadoEn   DateTime  @default(now())
+
+  pedidos    Pedido[]
+  resenas    Resena[]
+  direcciones Direccion[]
+
+  @@map("usuarios")
+}
+
+enum Rol {
+  CLIENTE
+  ADMIN
+}
+
+model Categoria {
+  id          Int        @id @default(autoincrement())
+  nombre      String     @unique
+  descripcion String?
+  imagen      String?
+  activo      Boolean    @default(true)
+
+  productos   Producto[]
+
+  @@map("categorias")
+}
+
+model Producto {
+  id          Int       @id @default(autoincrement())
+  nombre      String
+  descripcion String?
+  precio      Decimal   @db.Decimal(10, 2)
+  precioOferta Decimal? @db.Decimal(10, 2)
+  stock       Int       @default(0)
+  stockMinimo Int       @default(5)
+  sku         String?   @unique
+  imagenes    String[]
+  activo      Boolean   @default(true)
+  destacado   Boolean   @default(false)
+  creadoEn    DateTime  @default(now())
+
+  categoriaId Int
+  categoria   Categoria @relation(fields: [categoriaId], references: [id])
+
+  detalles    DetallePedido[]
+  resenas     Resena[]
+
+  @@map("productos")
+}
+
+model Direccion {
+  id          Int      @id @default(autoincrement())
+  usuarioId   Int
+  usuario     Usuario  @relation(fields: [usuarioId], references: [id])
+  nombre      String
+  direccion   String
+  distrito    String
+  provincia   String
+  referencia  String?
+  esPrincipal Boolean  @default(false)
+
+  pedidos     Pedido[]
+
+  @@map("direcciones")
+}
+
+model Pedido {
+  id              Int           @id @default(autoincrement())
+  usuarioId       Int
+  usuario         Usuario       @relation(fields: [usuarioId], references: [id])
+  direccionId     Int?
+  direccion       Direccion?    @relation(fields: [direccionId], references: [id])
+  total           Decimal       @db.Decimal(10, 2)
+  estado          EstadoPedido  @default(PENDIENTE)
+  tipoEntrega     TipoEntrega   @default(DELIVERY)
+  notas           String?
+  creadoEn        DateTime      @default(now())
+  actualizadoEn   DateTime      @updatedAt
+
+  detalles        DetallePedido[]
+  pago            Pago?
+
+  @@map("pedidos")
+}
+
+enum EstadoPedido {
+  PENDIENTE
+  PAGO_VERIFICADO
+  EN_PREPARACION
+  ENVIADO
+  ENTREGADO
+  CANCELADO
+}
+
+enum TipoEntrega {
+  DELIVERY
+  RECOJO_TIENDA
+}
+
+model DetallePedido {
+  id          Int      @id @default(autoincrement())
+  pedidoId    Int
+  pedido      Pedido   @relation(fields: [pedidoId], references: [id])
+  productoId  Int
+  producto    Producto @relation(fields: [productoId], references: [id])
+  cantidad    Int
+  precioUnit  Decimal  @db.Decimal(10, 2)
+  subtotal    Decimal  @db.Decimal(10, 2)
+
+  @@map("detalle_pedidos")
+}
+
+model Pago {
+  id              Int         @id @default(autoincrement())
+  pedidoId        Int         @unique
+  pedido          Pedido      @relation(fields: [pedidoId], references: [id])
+  metodo          MetodoPago
+  estado          EstadoPago  @default(PENDIENTE)
+  monto           Decimal     @db.Decimal(10, 2)
+  comprobanteUrl  String?     // Foto del comprobante Yape
+  codigoOp        String?     // Código de operación Yape
+  notas           String?     // Notas del admin al verificar
+  creadoEn        DateTime    @default(now())
+  verificadoEn    DateTime?
+  verificadoPor   Int?        // ID del admin que verificó
+
+  @@map("pagos")
+}
+
+enum MetodoPago {
+  YAPE
+  EFECTIVO
+  TRANSFERENCIA
+}
+
+enum EstadoPago {
+  PENDIENTE
+  VERIFICADO
+  RECHAZADO
+}
+
+model Resena {
+  id          Int      @id @default(autoincrement())
+  usuarioId   Int
+  usuario     Usuario  @relation(fields: [usuarioId], references: [id])
+  productoId  Int
+  producto    Producto @relation(fields: [productoId], references: [id])
+  calificacion Int    // 1 al 5
+  comentario  String?
+  creadoEn    DateTime @default(now())
+
+  @@map("resenas")
+}
+
+model Banner {
+  id       Int     @id @default(autoincrement())
+  titulo   String
+  imagen   String
+  link     String?
+  activo   Boolean @default(true)
+  orden    Int     @default(0)
+
+  @@map("banners")
+}
