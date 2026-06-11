@@ -8,6 +8,7 @@ import Productos from './pages/Productos'
 import Checkout from './pages/Checkout'
 import Login from './pages/Login'
 import MisPedidos from './pages/MisPedidos'
+import Producto from './pages/Producto'
 
 function Footer() {
   return (
@@ -57,6 +58,7 @@ export default function App() {
             <Route path="/checkout"    element={<Checkout />} />
             <Route path="/login"       element={<Login />} />
             <Route path="/mis-pedidos" element={<MisPedidos />} />
+            <Route path="/producto/:id" element={<Producto />} />
           </Routes>
           <Footer />
         </CarritoProvider>

@@ -22,8 +22,12 @@ export default function ProductoCard({ producto }) {
 
         {/* Imagen */}
         <div style={{ position: 'relative', paddingTop: '75%', background: '#F9FAFB' }}>
-          <img src={producto.imagenes?.[0] || 'https://placehold.co/300x225?text=Producto'} alt={producto.nombre}
-            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
+          <img 
+              src={producto.imagenes?.[0] || 'https://placehold.co/300x225?text=Producto'} 
+              alt={producto.nombre}
+              onError={e => { e.target.src = 'https://placehold.co/300x225?text=Sin+imagen' }}
+              style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} 
+            />
           {tieneOferta && (
             <span style={{ position: 'absolute', top: '10px', left: '10px', background: '#E63946', color: 'white', fontSize: '0.75rem', fontWeight: 700, padding: '0.2rem 0.5rem', borderRadius: '4px' }}>
               -{descuento}%

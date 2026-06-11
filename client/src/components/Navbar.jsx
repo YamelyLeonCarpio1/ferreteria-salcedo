@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { ShoppingCart, Search, User, Menu, X, Wrench } from 'lucide-react'
+import { ShoppingCart, Search, User, Wrench } from 'lucide-react'
+import axios from 'axios'
 import { useCarrito } from '../context/CarritoContext'
 import { useAuth } from '../context/AuthContext'
 import CarritoDrawer from './CarritoDrawer'
@@ -8,10 +9,15 @@ import CarritoDrawer from './CarritoDrawer'
 export default function Navbar() {
   const { totalItems } = useCarrito()
   const { usuario, logout } = useAuth()
-  const [buscar, setBuscar] = useState('')
+  const [buscar, setBuscar]         = useState('')
   const [drawerAbierto, setDrawerAbierto] = useState(false)
-  const [menuAbierto, setMenuAbierto] = useState(false)
+  const [menuAbierto, setMenuAbierto]     = useState(false)
+  const [categorias, setCategorias]       = useState([])
   const navigate = useNavigate()
+
+  useEffect(() => {
+    axios.get('/api/categorias').then(r => setCategorias(r.data))
+  }, [])
 
   const handleBuscar = (e) => {
     e.preventDefault()
@@ -79,11 +85,18 @@ export default function Navbar() {
           </div>
         </div>
 
-        {/* Categorías */}
-        <div className="contenedor" style={{ marginTop: '0.5rem', display: 'flex', gap: '1.5rem', overflowX: 'auto' }}>
-          {['Cerraduras y Candados','Herramientas Manuales','Pinturas y Accesorios','Electricidad','Plomería','Fijaciones y Tornillos'].map(cat => (
-            <Link key={cat} to={`/productos?categoria=${cat}`} style={{ color: 'rgba(255,255,255,0.85)', fontSize: '0.85rem', fontWeight: 600, whiteSpace: 'nowrap', padding: '0.2rem 0' }}>
-              {cat}
+        {/* Categorías dinámicas */}
+        <div className="contenedor" style={{ marginTop: '0.5rem', display: 'flex', gap: '1.5rem', overflowX: 'auto', paddingBottom: '0.2rem' }}>
+          <Link to="/productos" style={{ color: 'rgba(255,255,255,0.85)', fontSize: '0.85rem', fontWeight: 700, whiteSpace: 'nowrap' }}>
+            Todos
+          </Link>
+          {categorias.map(cat => (
+            <Link
+              key={cat.id}
+              to={`/productos?categoriaId=${cat.id}&categoria=${encodeURIComponent(cat.nombre)}`}
+              style={{ color: 'rgba(255,255,255,0.85)', fontSize: '0.85rem', fontWeight: 600, whiteSpace: 'nowrap', padding: '0.2rem 0' }}
+            >
+              {cat.nombre}
             </Link>
           ))}
         </div>

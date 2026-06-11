@@ -19,7 +19,7 @@ export default function Pagos() {
   const verificar = async (pedidoId, accion) => {
     setCargando(true)
     try {
-      await axios.patch(`/api/admin/pagos/${pedidoId}/verificar`, { accion, notas })
+      await axios.post(`/api/admin/pedidos/${pedidoId}/pago`, { accion, notas })
       toast.success(accion === 'VERIFICADO' ? '✅ Pago verificado' : '❌ Pago rechazado')
       setModal(null)
       setNotas('')

@@ -142,9 +142,16 @@ const updateProducto = async (req, res) => {
   try {
     const data = { ...req.body }
     if (data.precio)      data.precio      = parseFloat(data.precio)
-    if (data.precioOferta) data.precioOferta = parseFloat(data.precioOferta)
+    data.precioOferta = data.precioOferta !== '' && data.precioOferta != null
+      ? parseFloat(data.precioOferta)
+      : null
     if (data.stock)       data.stock       = parseInt(data.stock)
     if (data.categoriaId) data.categoriaId = parseInt(data.categoriaId)
+
+    delete data.categoria
+    delete data.detalles
+    delete data.resenas
+    delete data._count
 
     const producto = await prisma.producto.update({
       where: { id: parseInt(req.params.id) },
@@ -152,7 +159,8 @@ const updateProducto = async (req, res) => {
     })
     res.json(producto)
   } catch (error) {
-    res.status(500).json({ error: 'Error al actualizar producto' })
+    console.error('❌ Error updateProducto:', error.message)
+    res.status(500).json({ error: error.message })
   }
 }
 

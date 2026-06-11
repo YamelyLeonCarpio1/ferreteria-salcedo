@@ -17,7 +17,7 @@ export default function Pedidos() {
 
   const cambiarEstado = async (id, estado) => {
     try {
-      await axios.patch(`/api/admin/pedidos/${id}/estado`, { estado })
+      await axios.put(`/api/admin/pedidos/${id}`, { estado })
       toast.success('Estado actualizado')
       cargar()
     } catch { toast.error('Error al actualizar') }
