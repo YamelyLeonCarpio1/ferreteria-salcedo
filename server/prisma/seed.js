@@ -11,10 +11,17 @@ async function main() {
   // ─── ADMIN ───────────────────────────────────────────────
   const adminPassword = await bcrypt.hash('admin123', 10)
   await prisma.usuario.upsert({
-    where:  { email: 'admin@ferrreteriasalcedo.com' },
-    update: {},
-    create: { nombre: 'Admin', apellido: 'Salcedo', email: 'admin@ferrreteriasalcedo.com', password: adminPassword, rol: 'ADMIN' }
-  })
+  where:  { email: 'admin@ferrreteriasalcedo.com' },
+  update: {},
+  create: {
+    nombre:     'Admin',
+    apellido:   'Salcedo',
+    email:      'admin@ferrreteriasalcedo.com',
+    password:   adminPassword,
+    rol:        'ADMIN',
+    verificado: true  // ← agregar esta línea
+  }
+})
 
   // ─── CATEGORÍAS ──────────────────────────────────────────
   const cats = [

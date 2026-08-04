@@ -1,4 +1,5 @@
 const prisma = require('../prisma')
+const { enviarConfirmacionPedido } = require('../services/email.service')
 
 const crearPedido = async (req, res) => {
   try {
@@ -67,6 +68,21 @@ const crearPedido = async (req, res) => {
 
       return nuevoPedido
     })
+
+    // Consultar el pedido completo con relaciones para el envío del correo
+    const pedidoCompleto = await prisma.pedido.findUnique({
+      where: { id: pedido.id },
+      include: {
+        usuario: true,
+        detalles: { include: { producto: true } },
+        pago: true
+      }
+    })
+
+    if (pedidoCompleto?.usuario?.email) {
+      enviarConfirmacionPedido(pedidoCompleto.usuario.email, pedidoCompleto.usuario.nombre, pedidoCompleto)
+        .catch(err => console.error('Error enviando email pedido:', err))
+    }
 
     res.status(201).json(pedido)
   } catch (error) {

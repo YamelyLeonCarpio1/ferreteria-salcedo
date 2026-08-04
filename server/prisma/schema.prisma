@@ -9,18 +9,21 @@ datasource db {
 }
 
 model Usuario {
-  id         Int       @id @default(autoincrement())
-  nombre     String
-  apellido   String
-  email      String    @unique
-  password   String
-  telefono   String?
-  rol        Rol       @default(CLIENTE)
-  activo     Boolean   @default(true)
-  creadoEn   DateTime  @default(now())
+  id               Int       @id @default(autoincrement())
+  nombre           String
+  apellido         String
+  email            String    @unique
+  password         String
+  telefono         String?
+  rol              Rol       @default(CLIENTE)
+  activo           Boolean   @default(true)
+  verificado       Boolean   @default(false)   // ← NUEVO
+  codigoVerif      String?                      // ← NUEVO
+  codigoVerifExp   DateTime?                    // ← NUEVO
+  creadoEn         DateTime  @default(now())
 
-  pedidos    Pedido[]
-  resenas    Resena[]
+  pedidos     Pedido[]
+  resenas     Resena[]
   direcciones Direccion[]
 
   @@map("usuarios")

@@ -38,10 +38,12 @@ export default function Productos() {
   }, [buscar, catId, soloOferta])
 
   const tituloSeccion = buscar
-    ? `Resultados para "${buscar}"`
-    : catNombre
-    ? catNombre
-    : 'TODOS LOS PRODUCTOS'
+  ? `Resultados para "${buscar}"`
+  : soloOferta
+  ? '⭐ OFERTAS DEL DÍA'
+  : catNombre
+  ? catNombre
+  : 'TODOS LOS PRODUCTOS'
 
   return (
     <div className="contenedor" style={{ padding: '2rem 1.5rem' }}>

@@ -2,7 +2,7 @@ const prisma = require('../prisma')
 
 const getProductos = async (req, res) => {
   try {
-    const { buscar, categoriaId, orden, pagina = 1, limite = 12 } = req.query
+    const { buscar, categoriaId, destacado, orden, pagina = 1, limite = 12 } = req.query
     const skip = (pagina - 1) * limite
 
     const where = { activo: true }
@@ -11,6 +11,9 @@ const getProductos = async (req, res) => {
     }
     if (categoriaId) {
       where.categoriaId = parseInt(categoriaId)
+    }
+    if (destacado === 'true') {
+      where.destacado = true
     }
 
     let orderBy = { creadoEn: 'desc' }

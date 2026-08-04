@@ -64,13 +64,28 @@ const getPedidos = async (req, res) => {
   }
 }
 
+const { enviarActualizacionEstado } = require('../services/email.service')
+
 const updatePedido = async (req, res) => {
   try {
     const { estado } = req.body
     const pedido = await prisma.pedido.update({
       where: { id: parseInt(req.params.id) },
-      data: { estado }
+      data: { estado },
+      include: {
+        usuario: true,
+        detalles: { include: { producto: true } },
+        pago: true
+      }
     })
+
+    // Enviar email de notificación al cliente
+    const estadosNotificar = ['PAGO_VERIFICADO','EN_PREPARACION','ENVIADO','ENTREGADO','CANCELADO']
+    if (estadosNotificar.includes(estado) && pedido.usuario?.email) {
+      enviarActualizacionEstado(pedido.usuario.email, pedido.usuario.nombre, pedido)
+        .catch(err => console.error('Error enviando email estado:', err))
+    }
+
     res.json(pedido)
   } catch (error) {
     res.status(500).json({ error: 'Error al actualizar pedido' })
@@ -175,8 +190,26 @@ const eliminarProducto = async (req, res) => {
     res.status(500).json({ error: 'Error al eliminar producto' })
   }
 }
+const getClientes = async (req, res) => {
+  try {
+    const clientes = await prisma.usuario.findMany({
+      where: { rol: 'CLIENTE' },
+      select: {
+        id: true, nombre: true, apellido: true,
+        email: true, telefono: true, activo: true,
+        creadoEn: true, verificado: true,
+        _count: { select: { pedidos: true } }
+      },
+      orderBy: { creadoEn: 'desc' }
+    })
+    res.json(clientes)
+  } catch (error) {
+    res.status(500).json({ error: 'Error al obtener clientes' })
+  }
+}
 
 module.exports = {
   getDashboard, getPedidos, updatePedido, verificarPago,
-  getProductos, crearProducto, updateProducto, eliminarProducto
+  getProductos, crearProducto, updateProducto, eliminarProducto,
+  getClientes  
 }

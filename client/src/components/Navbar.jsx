@@ -31,7 +31,7 @@ export default function Navbar() {
     <>
       {/* Barra superior */}
       <div style={{ background: '#1A1A2E', color: '#FFB703', padding: '0.4rem 0', fontSize: '0.82rem', textAlign: 'center' }}>
-        📍 Jr. Los Artesanos 245, Lima — 📞 987-654-321 — Lun-Sáb 8am-7pm
+        📍 Jr. Los Artesanos 245, Lima — 📞 916-312-463 — Lun-Sáb 8am-7pm
       </div>
 
       {/* Navbar principal */}

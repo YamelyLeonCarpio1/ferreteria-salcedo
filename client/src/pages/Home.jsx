@@ -87,7 +87,7 @@ export default function Home() {
       <section style={{ background: '#1A1A2E', color: 'white', padding: '3rem 0', textAlign: 'center' }}>
         <div className="contenedor">
           <h2 style={{ fontFamily: "'Barlow Condensed', sans-serif", fontSize: '2rem', fontWeight: 800, marginBottom: '0.8rem' }}>
-            💜 PAGA CON <span style={{ color: '#7C3AED' }}>YAPE</span> Y RECIBE HOY
+             PAGA CON <span style={{ color: '#7C3AED' }}>YAPE</span> Y RECIBE HOY
           </h2>
           <p style={{ color: '#9CA3AF', maxWidth: '500px', margin: '0 auto 1.5rem' }}>
             Realiza tu pedido, paga con Yape y lo verificamos en minutos. Delivery el mismo día en Lima.

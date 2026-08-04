@@ -3,7 +3,7 @@ const { verificarToken, verificarAdmin } = require('../middleware/auth.middlewar
 const {
   getDashboard, getPedidos, updatePedido,
   getProductos, crearProducto, updateProducto, eliminarProducto,
-  verificarPago
+  verificarPago, getClientes
 } = require('../controllers/admin.controller')
 
 router.use(verificarToken, verificarAdmin)
@@ -16,6 +16,7 @@ router.get('/productos',           getProductos)
 router.post('/productos',          crearProducto)
 router.put('/productos/:id',       updateProducto)
 router.delete('/productos/:id',    eliminarProducto)
+router.get('/clientes', getClientes)
 
 
 const { upload, cloudinary } = require('../lib/cloudinary')
