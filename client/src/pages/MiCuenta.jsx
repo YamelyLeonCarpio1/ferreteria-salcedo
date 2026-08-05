@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useAuth } from '../context/AuthContext'
 import { Link, useNavigate } from 'react-router-dom'
-import axios from 'axios'
+import axios from '../lib/axios'
 import toast from 'react-hot-toast'
 import { ShoppingBag, LogOut } from 'lucide-react'
 

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useSearchParams, Link } from 'react-router-dom'
-import axios from 'axios'
+import axios from '../lib/axios'
 import ProductoCard from '../components/ProductoCard'
 import { SlidersHorizontal } from 'lucide-react'
 

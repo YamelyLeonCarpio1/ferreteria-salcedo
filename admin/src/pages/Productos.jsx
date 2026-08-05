@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import axios from 'axios'
+import axios from '../lib/axios'
 import toast from 'react-hot-toast'
 import { Plus, Pencil, ToggleLeft, ToggleRight } from 'lucide-react'
 

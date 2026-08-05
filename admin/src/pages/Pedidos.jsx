@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import axios from 'axios'
+import axios from '../lib/axios'
 import toast from 'react-hot-toast'
 
 const ESTADOS = ['PENDIENTE','PAGO_VERIFICADO','EN_PREPARACION','ENVIADO','ENTREGADO','CANCELADO']

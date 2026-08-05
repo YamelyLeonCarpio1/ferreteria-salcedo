@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { ShoppingCart, Search, User, Wrench } from 'lucide-react'
-import axios from 'axios'
+import axios from '../lib/axios'
 import { useCarrito } from '../context/CarritoContext'
 import { useAuth } from '../context/AuthContext'
 import CarritoDrawer from './CarritoDrawer'

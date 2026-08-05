@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useCarrito } from '../context/CarritoContext'
 import { useAuth } from '../context/AuthContext'
 import { useNavigate, Link } from 'react-router-dom'
-import axios from 'axios'
+import axios from '../lib/axios'
 import toast from 'react-hot-toast'
 import { Upload, CheckCircle, MapPin } from 'lucide-react'
 
