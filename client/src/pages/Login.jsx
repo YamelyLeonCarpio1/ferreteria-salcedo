@@ -143,7 +143,7 @@ export default function Login() {
   // ── Pantalla de recuperación ─────────────────────────────
   if (recuperando) return (
     <div style={{ minHeight: '80vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#F9FAFB', padding: '2rem' }}>
-      <div style={{ background: 'white', borderRadius: '16px', boxShadow: '0 4px 24px rgba(0,0,0,0.1)', padding: '2.5rem', width: '100%', maxWidth: '420px' }}>
+      <div className="login-card" style={{ background: 'white', borderRadius: '16px', boxShadow: '0 4px 24px rgba(0,0,0,0.1)', padding: '2.5rem', width: '100%', maxWidth: '420px' }}>
 
         <div style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
           <div style={{ fontSize: '2.5rem', marginBottom: '0.5rem' }}>🔐</div>
@@ -169,7 +169,7 @@ export default function Login() {
           <form onSubmit={handleResetearPassword}>
             {/* Código */}
             <p style={{ fontWeight: 600, fontSize: '0.88rem', marginBottom: '0.5rem' }}>Código de verificación:</p>
-            <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'center', marginBottom: '1.2rem' }}>
+            <div className="codigo-inputs" style={{ marginBottom: '1.2rem' }}>
               {codigoRecup.map((d, i) => (
                 <input key={i} id={`rec-${i}`} type="text" inputMode="numeric" maxLength={1} value={d}
                   onChange={e => {
@@ -224,7 +224,7 @@ export default function Login() {
         </p>
 
         {/* Inputs del código */}
-        <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'center', marginBottom: '1.5rem' }}>
+        <div className="codigo-inputs" style={{ marginBottom: '1.5rem' }}>
           {codigo.map((d, i) => (
             <input
               key={i}
@@ -265,7 +265,7 @@ export default function Login() {
   // ── Pantalla de login/registro ───────────────────────────
   return (
     <div style={{ minHeight: '80vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#F9FAFB', padding: '2rem' }}>
-      <div style={{ background: 'white', borderRadius: '12px', boxShadow: '0 4px 24px rgba(0,0,0,0.1)', padding: '2.5rem', width: '100%', maxWidth: '420px' }}>
+      <div className="login-card" style={{ background: 'white', borderRadius: '12px', boxShadow: '0 4px 24px rgba(0,0,0,0.1)', padding: '2.5rem', width: '100%', maxWidth: '420px' }}>
 
         <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
           <div style={{ color: '#E63946', marginBottom: '0.5rem' }}><Wrench size={32} /></div>
@@ -284,7 +284,7 @@ export default function Login() {
         <form onSubmit={handleSubmit}>
           {tab === 'registro' && (
             <>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1rem' }}>
+              <div className="form-grid-2" style={{ marginBottom: '1rem' }}>
                 {['nombre','apellido'].map(f => (
                   <div key={f}>
                     <label style={{ display: 'block', fontWeight: 600, marginBottom: '0.3rem', textTransform: 'capitalize', fontSize: '0.9rem' }}>{f}</label>

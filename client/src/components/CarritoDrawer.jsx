@@ -12,7 +12,7 @@ export default function CarritoDrawer({ abierto, onCerrar }) {
       {abierto && <div onClick={onCerrar} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', zIndex: 200 }} />}
 
       {/* Drawer */}
-      <div style={{ position: 'fixed', top: 0, right: abierto ? 0 : '-420px', width: '420px', maxWidth: '95vw', height: '100vh', background: 'white', zIndex: 201, boxShadow: '-4px 0 20px rgba(0,0,0,0.15)', transition: 'right 0.3s ease', display: 'flex', flexDirection: 'column' }}>
+      <div className="cart-drawer" style={{ position: 'fixed', top: 0, right: abierto ? 0 : '-420px', width: '420px', maxWidth: '95vw', height: '100vh', background: 'white', zIndex: 201, boxShadow: '-4px 0 20px rgba(0,0,0,0.15)', transition: 'right 0.3s ease', display: 'flex', flexDirection: 'column' }}>
 
         {/* Header */}
         <div style={{ padding: '1.2rem 1.5rem', borderBottom: '1px solid #E5E7EB', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -31,7 +31,7 @@ export default function CarritoDrawer({ abierto, onCerrar }) {
             </div>
           ) : (
             items.map(item => (
-              <div key={item.id} style={{ display: 'flex', gap: '1rem', marginBottom: '1.2rem', paddingBottom: '1.2rem', borderBottom: '1px solid #F3F4F6' }}>
+              <div key={item.id} className="cart-item" style={{ display: 'flex', gap: '1rem', marginBottom: '1.2rem', paddingBottom: '1.2rem', borderBottom: '1px solid #F3F4F6' }}>
                 <img src={item.imagenes?.[0] || 'https://placehold.co/80x80?text=Foto'} alt={item.nombre} style={{ width: '70px', height: '70px', objectFit: 'cover', borderRadius: '8px' }} />
                 <div style={{ flex: 1 }}>
                   <p style={{ fontWeight: 600, fontSize: '0.9rem', marginBottom: '0.3rem' }}>{item.nombre}</p>

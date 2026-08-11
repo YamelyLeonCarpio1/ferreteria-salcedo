@@ -302,16 +302,16 @@ export default function Checkout() {
 
   // ── PASO 1 ───────────────────────────────────────────────
   return (
-    <div className="contenedor" style={{ padding: '2rem 1.5rem' }}>
-      <h1 style={{ fontFamily: "'Barlow Condensed', sans-serif", fontSize: '2rem', fontWeight: 800, marginBottom: '2rem' }}>FINALIZAR COMPRA</h1>
+    <div className="contenedor page-padding">
+      <h1 className="page-title" style={{ fontFamily: "'Barlow Condensed', sans-serif", fontSize: '2rem', fontWeight: 800, marginBottom: '2rem' }}>FINALIZAR COMPRA</h1>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 380px', gap: '2rem' }}>
+      <div className="grid-checkout">
         <div>
 
           {/* Tipo entrega */}
-          <div style={{ background: 'white', border: '1px solid #E5E7EB', borderRadius: '10px', padding: '1.5rem', marginBottom: '1.5rem' }}>
+          <div className="checkout-card" style={{ background: 'white', border: '1px solid #E5E7EB', borderRadius: '10px', padding: '1.5rem', marginBottom: '1.5rem' }}>
             <h3 style={{ fontWeight: 700, marginBottom: '1rem' }}>Tipo de entrega</h3>
-            <div style={{ display: 'flex', gap: '1rem' }}>
+            <div className="radio-row">
               {[['DELIVERY','🚚 Delivery a domicilio'],['RECOJO_TIENDA','🏪 Recojo en tienda']].map(([v,l]) => (
                 <label key={v} style={{ flex: 1, border: `2px solid ${tipoEntrega===v?'#E63946':'#E5E7EB'}`, borderRadius: '8px', padding: '1rem', cursor: 'pointer', background: tipoEntrega===v?'#FEF2F2':'white', textAlign: 'center', fontWeight: 600 }}>
                   <input type="radio" value={v} checked={tipoEntrega===v} onChange={() => setTipoEntrega(v)} style={{ display: 'none' }} />
@@ -389,7 +389,7 @@ export default function Checkout() {
           {/* Método de pago */}
           <div style={{ background: 'white', border: '1px solid #E5E7EB', borderRadius: '10px', padding: '1.5rem' }}>
             <h3 style={{ fontWeight: 700, marginBottom: '1rem' }}>Método de pago</h3>
-            <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+            <div className="payment-methods" style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
 
               {/* Yape — siempre disponible */}
               {[['YAPE','💜 Yape'],['TRANSFERENCIA','🏦 Transferencia']].map(([v,l]) => (
@@ -419,7 +419,7 @@ export default function Checkout() {
 
         {/* Resumen */}
         <div>
-          <div style={{ background: 'white', border: '1px solid #E5E7EB', borderRadius: '10px', padding: '1.5rem', position: 'sticky', top: '100px' }}>
+          <div className="sticky-summary" style={{ background: 'white', border: '1px solid #E5E7EB', borderRadius: '10px', padding: '1.5rem' }}>
             <h3 style={{ fontWeight: 700, marginBottom: '1rem' }}>Resumen del pedido</h3>
             {items.map(i => (
               <div key={i.id} style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.6rem', fontSize: '0.9rem' }}>

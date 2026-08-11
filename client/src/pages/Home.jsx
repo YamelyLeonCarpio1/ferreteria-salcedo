@@ -16,7 +16,7 @@ export default function Home() {
   return (
     <div>
       {/* Hero Banner */}
-      <div style={{ background: 'linear-gradient(135deg, #1A1A2E 0%, #2D2D2D 100%)', color: 'white', padding: '4rem 0', position: 'relative', overflow: 'hidden' }}>
+      <div className="hero-banner" style={{ background: 'linear-gradient(135deg, #1A1A2E 0%, #2D2D2D 100%)', color: 'white', position: 'relative', overflow: 'hidden' }}>
         <div style={{ position: 'absolute', right: 0, top: 0, width: '50%', height: '100%', background: 'url(https://placehold.co/800x400/E63946/E63946?text=+) center/cover', opacity: 0.08 }} />
         <div className="contenedor">
           <p style={{ color: '#FFB703', fontWeight: 700, marginBottom: '0.5rem', letterSpacing: '2px', fontSize: '0.85rem' }}>⚡ FERRETERÍA SALCEDO</p>
@@ -52,8 +52,8 @@ export default function Home() {
       {/* Categorías */}
       <section style={{ padding: '3rem 0' }}>
         <div className="contenedor">
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
-            <h2 style={{ fontFamily: "'Barlow Condensed', sans-serif", fontSize: '1.8rem', fontWeight: 800 }}>CATEGORÍAS</h2>
+          <div className="section-header-row" style={{ marginBottom: '1.5rem' }}>
+            <h2 style={{ fontFamily: "'Barlow Condensed', sans-serif", fontSize: 'clamp(1.3rem, 4vw, 1.8rem)', fontWeight: 800 }}>CATEGORÍAS</h2>
             <Link to="/productos" style={{ color: '#E63946', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.3rem' }}>Ver todo <ChevronRight size={18} /></Link>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))', gap: '1rem' }}>
@@ -73,11 +73,11 @@ export default function Home() {
       {/* Productos destacados */}
       <section style={{ padding: '2rem 0 4rem', background: '#F9FAFB' }}>
         <div className="contenedor">
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
-            <h2 style={{ fontFamily: "'Barlow Condensed', sans-serif", fontSize: '1.8rem', fontWeight: 800 }}>⭐ PRODUCTOS DESTACADOS</h2>
+          <div className="section-header-row" style={{ marginBottom: '1.5rem' }}>
+            <h2 style={{ fontFamily: "'Barlow Condensed', sans-serif", fontSize: 'clamp(1.3rem, 4vw, 1.8rem)', fontWeight: 800 }}>⭐ PRODUCTOS DESTACADOS</h2>
             <Link to="/productos" style={{ color: '#E63946', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.3rem' }}>Ver todo <ChevronRight size={18} /></Link>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: '1.2rem' }}>
+          <div className="product-grid">
             {destacados.map(p => <ProductoCard key={p.id} producto={p} />)}
           </div>
         </div>
@@ -86,7 +86,7 @@ export default function Home() {
       {/* Banner Yape */}
       <section style={{ background: '#1A1A2E', color: 'white', padding: '3rem 0', textAlign: 'center' }}>
         <div className="contenedor">
-          <h2 style={{ fontFamily: "'Barlow Condensed', sans-serif", fontSize: '2rem', fontWeight: 800, marginBottom: '0.8rem' }}>
+          <h2 style={{ fontFamily: "'Barlow Condensed', sans-serif", fontSize: 'clamp(1.4rem, 4vw, 2rem)', fontWeight: 800, marginBottom: '0.8rem' }}>
              PAGA CON <span style={{ color: '#7C3AED' }}>YAPE</span> Y RECIBE HOY
           </h2>
           <p style={{ color: '#9CA3AF', maxWidth: '500px', margin: '0 auto 1.5rem' }}>

@@ -43,7 +43,7 @@ export default function Pagos() {
       <p style={{ color: '#64748B', marginBottom: '1.5rem' }}>Revisa los comprobantes Yape y confirma los pagos</p>
 
       {/* Filtros */}
-      <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1.5rem' }}>
+      <div className="admin-filter-row" style={{ display: 'flex', gap: '0.5rem', marginBottom: '1.5rem' }}>
         {FILTROS.map(f => (
           <button key={f.valor} onClick={() => setFiltro(f.valor)} className="btn"
             style={{ background: filtro === f.valor ? '#E63946' : 'white', color: filtro === f.valor ? 'white' : '#374151', border: '1px solid var(--borde)' }}>
@@ -114,7 +114,7 @@ export default function Pagos() {
       {/* Modal detalle */}
       {modal && (
         <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', zIndex: 100, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1rem' }}>
-          <div style={{ background: 'white', borderRadius: '12px', padding: '2rem', width: '100%', maxWidth: '520px', maxHeight: '90vh', overflowY: 'auto' }}>
+          <div className="admin-modal-content" style={{ background: 'white', borderRadius: '12px', padding: '2rem', width: '100%', maxWidth: '520px', maxHeight: '90vh', overflowY: 'auto' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
               <h2 style={{ fontFamily: "'Barlow Condensed', sans-serif", fontSize: '1.4rem', fontWeight: 800 }}>PEDIDO #{modal.id}</h2>
               <button onClick={() => setModal(null)} style={{ background: 'none', border: 'none', color: '#64748B' }}><X size={22} /></button>
@@ -168,7 +168,7 @@ export default function Pagos() {
                     placeholder="Ej: Pago verificado en Yape personal"
                     rows={2} style={{ resize: 'vertical' }} />
                 </div>
-                <div style={{ display: 'flex', gap: '0.75rem' }}>
+                <div className="admin-modal-actions" style={{ display: 'flex', gap: '0.75rem' }}>
                   <button onClick={() => verificar(modal.id, 'VERIFICADO')} disabled={cargando}
                     className="btn btn-verde" style={{ flex: 1, padding: '0.8rem', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}>
                     <CheckCircle size={16} /> {cargando ? 'Procesando...' : 'Confirmar pago'}

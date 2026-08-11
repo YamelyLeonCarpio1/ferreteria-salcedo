@@ -67,13 +67,13 @@ export default function MiCuenta() {
   if (!usuario) return null
 
   return (
-    <div className="contenedor" style={{ padding: '2rem 1.5rem', maxWidth: '800px' }}>
-      <h1 style={{ fontFamily: "'Barlow Condensed', sans-serif", fontSize: '2rem', fontWeight: 800, marginBottom: '2rem' }}>
+    <div className="contenedor page-padding" style={{ maxWidth: '800px' }}>
+      <h1 className="page-title" style={{ fontFamily: "'Barlow Condensed', sans-serif", fontSize: '2rem', fontWeight: 800, marginBottom: '2rem' }}>
         MI CUENTA
       </h1>
 
       {/* Tarjeta de perfil */}
-      <div style={{ background: 'linear-gradient(135deg, #1A1A2E, #2D2D2D)', borderRadius: '12px', padding: '1.5rem 2rem', marginBottom: '2rem', display: 'flex', alignItems: 'center', gap: '1.5rem', flexWrap: 'wrap' }}>
+      <div className="perfil-card" style={{ background: 'linear-gradient(135deg, #1A1A2E, #2D2D2D)', borderRadius: '12px', padding: '1.5rem 2rem', marginBottom: '2rem' }}>
         <div style={{ width: '70px', height: '70px', background: '#E63946', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.8rem', fontWeight: 800, color: 'white', flexShrink: 0 }}>
           {usuario.nombre?.[0]?.toUpperCase()}
         </div>
@@ -91,7 +91,7 @@ export default function MiCuenta() {
       </div>
 
       {/* Tabs */}
-      <div style={{ display: 'flex', borderBottom: '2px solid #E5E7EB', marginBottom: '1.5rem' }}>
+      <div className="cuenta-tabs">
         {[['perfil','👤 Datos personales'],['seguridad','🔒 Seguridad'],['pedidos','📦 Mis pedidos']].map(([t,l]) => (
           <button key={t} onClick={() => setTab(t)}
             style={{ padding: '0.7rem 1.2rem', background: 'none', border: 'none', fontWeight: 700, fontSize: '0.88rem', cursor: 'pointer', color: tab===t?'#E63946':'#6B7280', borderBottom: tab===t?'3px solid #E63946':'3px solid transparent', marginBottom: '-2px' }}>
@@ -105,7 +105,7 @@ export default function MiCuenta() {
         <div style={{ background: 'white', border: '1px solid #E5E7EB', borderRadius: '10px', padding: '1.5rem' }}>
           <h3 style={{ fontWeight: 700, marginBottom: '1.2rem' }}>Datos personales</h3>
           <form onSubmit={handleGuardar}>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1rem' }}>
+            <div className="form-grid-2" style={{ marginBottom: '1rem' }}>
               {[['nombre','Nombre'],['apellido','Apellido']].map(([k,l]) => (
                 <div key={k}>
                   <label style={{ display: 'block', fontWeight: 600, marginBottom: '0.4rem', fontSize: '0.88rem' }}>{l}</label>
@@ -223,7 +223,7 @@ export default function MiCuenta() {
               />
             </div>
 
-            <div style={{ display: 'flex', gap: '0.75rem' }}>
+            <div className="modal-actions">
               <button
                 onClick={handleEliminarCuenta}
                 disabled={eliminando || !passEliminar}

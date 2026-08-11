@@ -40,10 +40,10 @@ export default function Producto() {
   }
 
   return (
-    <div className="contenedor" style={{ padding: '2rem 1.5rem' }}>
+    <div className="contenedor page-padding">
 
       {/* Breadcrumb */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1.5rem', fontSize: '0.88rem', color: '#6B7280' }}>
+      <div className="breadcrumb-row" style={{ marginBottom: '1.5rem', fontSize: '0.88rem', color: '#6B7280' }}>
         <button onClick={() => navigate(-1)} style={{ background: 'none', border: 'none', color: '#E63946', display: 'flex', alignItems: 'center', gap: '0.3rem', fontWeight: 600, cursor: 'pointer' }}>
           <ArrowLeft size={16} /> Volver
         </button>
@@ -54,7 +54,7 @@ export default function Producto() {
       </div>
 
       {/* Contenido principal */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '3rem' }}>
+      <div className="grid-2" style={{ gap: '3rem' }}>
 
         {/* Imágenes */}
         <div>
@@ -68,7 +68,7 @@ export default function Producto() {
           </div>
           {/* Miniaturas */}
           {producto.imagenes?.length > 1 && (
-            <div style={{ display: 'flex', gap: '0.5rem' }}>
+            <div className="product-thumbnails" style={{ display: 'flex', gap: '0.5rem' }}>
               {producto.imagenes.map((img, i) => (
                 <button key={i} onClick={() => setImgActiva(i)}
                   style={{ width: '70px', height: '70px', border: `2px solid ${imgActiva === i ? '#E63946' : '#E5E7EB'}`, borderRadius: '8px', overflow: 'hidden', background: 'none', cursor: 'pointer', padding: 0 }}>
@@ -87,7 +87,7 @@ export default function Producto() {
           </p>
 
           {/* Nombre */}
-          <h1 style={{ fontFamily: "'Barlow Condensed', sans-serif", fontSize: '2rem', fontWeight: 800, lineHeight: 1.2, marginBottom: '1rem' }}>
+          <h1 className="producto-nombre" style={{ fontFamily: "'Barlow Condensed', sans-serif", fontSize: '2rem', fontWeight: 800, lineHeight: 1.2, marginBottom: '1rem' }}>
             {producto.nombre}
           </h1>
 
@@ -140,7 +140,7 @@ export default function Producto() {
 
           {/* Cantidad y botón */}
           {producto.stock > 0 && (
-            <div style={{ display: 'flex', gap: '1rem', alignItems: 'center', marginBottom: '1.5rem' }}>
+            <div className="add-cart-row" style={{ marginBottom: '1.5rem' }}>
               <div style={{ display: 'flex', alignItems: 'center', border: '1px solid #E5E7EB', borderRadius: '8px', overflow: 'hidden' }}>
                 <button onClick={() => setCantidad(c => Math.max(1, c - 1))}
                   style={{ width: '40px', height: '44px', background: 'none', border: 'none', fontSize: '1.2rem', fontWeight: 700, cursor: 'pointer' }}>−</button>

@@ -65,9 +65,9 @@ export default function Terminos() {
   return (
     <div>
       {/* Header */}
-      <div style={{ background: 'linear-gradient(135deg, #1A1A2E, #2D2D2D)', color: 'white', padding: '3rem 0', textAlign: 'center' }}>
+      <div className="terminos-header">
         <div className="contenedor">
-          <h1 style={{ fontFamily: "'Barlow Condensed', sans-serif", fontSize: '2.5rem', fontWeight: 800, marginBottom: '0.5rem' }}>
+          <h1>
             POLÍTICAS Y CONDICIONES
           </h1>
           <p style={{ color: '#9CA3AF', maxWidth: '500px', margin: '0 auto' }}>
@@ -79,10 +79,10 @@ export default function Terminos() {
         </div>
       </div>
 
-      <div className="contenedor" style={{ padding: '2rem 1.5rem' }}>
+      <div className="contenedor page-padding">
 
         {/* Tabs */}
-        <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '2rem', flexWrap: 'wrap', borderBottom: '2px solid #E5E7EB', paddingBottom: '0' }}>
+        <div className="terminos-tabs">
           {tabs.map(tab => (
             <button key={tab.id} onClick={() => setTabActiva(tab.id)}
               style={{ padding: '0.7rem 1.2rem', background: 'none', border: 'none', fontWeight: 700, fontSize: '0.88rem', cursor: 'pointer', color: tabActiva === tab.id ? '#E63946' : '#6B7280', borderBottom: tabActiva === tab.id ? '3px solid #E63946' : '3px solid transparent', marginBottom: '-2px', transition: 'all 0.15s' }}>

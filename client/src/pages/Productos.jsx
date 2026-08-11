@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useSearchParams, Link } from 'react-router-dom'
 import axios from '../lib/axios'
 import ProductoCard from '../components/ProductoCard'
-import { SlidersHorizontal } from 'lucide-react'
+import { SlidersHorizontal, ChevronDown, ChevronUp } from 'lucide-react'
 
 export default function Productos() {
   const [searchParams] = useSearchParams()
@@ -10,6 +10,7 @@ export default function Productos() {
   const [categorias, setCategorias] = useState([])
   const [total, setTotal]           = useState(0)
   const [cargando, setCargando]     = useState(true)
+  const [filtrosAbiertos, setFiltrosAbiertos] = useState(false)
 
   // Leer parámetros de la URL
   const buscar      = searchParams.get('buscar')      || ''
@@ -46,11 +47,17 @@ export default function Productos() {
   : 'TODOS LOS PRODUCTOS'
 
   return (
-    <div className="contenedor" style={{ padding: '2rem 1.5rem' }}>
-      <div style={{ display: 'flex', gap: '2rem' }}>
+    <div className="contenedor page-padding">
+      <div className="layout-sidebar">
 
-        {/* Sidebar */}
-        <aside style={{ width: '220px', flexShrink: 0 }}>
+        {/* Sidebar / filtros */}
+        <button type="button" className="filter-toggle" onClick={() => setFiltrosAbiertos(v => !v)}>
+          <SlidersHorizontal size={18} />
+          {filtrosAbiertos ? 'Ocultar categorías' : 'Filtrar por categoría'}
+          {filtrosAbiertos ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+        </button>
+
+        <aside className={`sidebar-filtros${filtrosAbiertos ? '' : ' is-collapsed'}`}>
           <h3 style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 800, fontSize: '1.1rem', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
             <SlidersHorizontal size={18} /> CATEGORÍAS
           </h3>
@@ -73,9 +80,9 @@ export default function Productos() {
         </aside>
 
         {/* Grid productos */}
-        <main style={{ flex: 1 }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
-            <h1 style={{ fontFamily: "'Barlow Condensed', sans-serif", fontSize: '1.6rem', fontWeight: 800 }}>
+        <main style={{ flex: 1, minWidth: 0 }}>
+          <div className="section-header-row" style={{ marginBottom: '1.5rem' }}>
+            <h1 className="page-title" style={{ fontFamily: "'Barlow Condensed', sans-serif", fontSize: '1.6rem', fontWeight: 800 }}>
               {tituloSeccion}
             </h1>
             <span style={{ color: '#6B7280', fontSize: '0.9rem' }}>{total} productos</span>
@@ -91,7 +98,7 @@ export default function Productos() {
               <Link to="/productos" style={{ color: '#E63946', fontWeight: 700 }}>Ver todos los productos</Link>
             </div>
           ) : (
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(210px, 1fr))', gap: '1.2rem' }}>
+            <div className="product-grid">
               {productos.map(p => <ProductoCard key={p.id} producto={p} />)}
             </div>
           )}

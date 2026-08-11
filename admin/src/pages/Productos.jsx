@@ -97,7 +97,7 @@ export default function ProductosAdmin() {
 
   return (
     <div>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+      <div className="admin-page-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
         <div>
           <h1 style={{ fontFamily: "'Barlow Condensed', sans-serif", fontSize: '2rem', fontWeight: 800 }}>PRODUCTOS</h1>
           <p style={{ color: '#64748B' }}>{productos.length} productos registrados</p>
@@ -158,7 +158,7 @@ export default function ProductosAdmin() {
       {/* Modal formulario */}
       {modal && (
         <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', zIndex: 100, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1rem' }}>
-          <div style={{ background: 'white', borderRadius: '12px', padding: '2rem', width: '100%', maxWidth: '560px', maxHeight: '90vh', overflowY: 'auto' }}>
+          <div className="admin-modal-content" style={{ background: 'white', borderRadius: '12px', padding: '2rem', width: '100%', maxWidth: '560px', maxHeight: '90vh', overflowY: 'auto' }}>
             <h2 style={{ fontFamily: "'Barlow Condensed', sans-serif", fontSize: '1.4rem', fontWeight: 800, marginBottom: '1.5rem' }}>
               {editando ? 'EDITAR PRODUCTO' : 'NUEVO PRODUCTO'}
             </h2>
@@ -219,7 +219,7 @@ export default function ProductosAdmin() {
                   <label htmlFor="destacado" style={{ fontWeight: 600, fontSize: '0.88rem' }}>Marcar como destacado</label>
                 </div>
               </div>
-              <div style={{ display: 'flex', gap: '0.75rem', marginTop: '1.5rem' }}>
+              <div className="admin-modal-actions" style={{ display: 'flex', gap: '0.75rem', marginTop: '1.5rem' }}>
                 <button type="submit" className="btn btn-rojo" style={{ flex: 1, padding: '0.8rem' }}>Guardar</button>
                 <button type="button" onClick={cerrarYLimpiar} className="btn btn-gris" style={{ flex: 1, padding: '0.8rem' }}>Cancelar</button>
               </div>

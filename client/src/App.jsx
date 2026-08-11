@@ -25,9 +25,9 @@ function WhatsAppFlotante() {
   const mensaje = encodeURIComponent('¡Hola! Quisiera hacer una consulta sobre sus productos 🔧')
 
   return (
-    <div style={{ position: 'fixed', bottom: '2rem', right: '2rem', zIndex: 999, display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '0.5rem' }}>
+    <div className="whatsapp-float" style={{ position: 'fixed', bottom: '2rem', right: '2rem', zIndex: 999, display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '0.5rem' }}>
       {/* Etiqueta */}
-      <div style={{ background: '#1A1A2E', color: 'white', padding: '0.4rem 0.8rem', borderRadius: '20px', fontSize: '0.78rem', fontWeight: 600, whiteSpace: 'nowrap', boxShadow: '0 2px 8px rgba(0,0,0,0.2)' }}>
+      <div className="whatsapp-float-label" style={{ background: '#1A1A2E', color: 'white', padding: '0.4rem 0.8rem', borderRadius: '20px', fontSize: '0.78rem', fontWeight: 600, whiteSpace: 'nowrap', boxShadow: '0 2px 8px rgba(0,0,0,0.2)' }}>
         💬 ¿Necesitas ayuda?
       </div>
 
@@ -151,7 +151,7 @@ function Footer() {
         </div>
 
         {/* Copyright */}
-        <div style={{ borderTop: '1px solid #374151', paddingTop: '1.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.5rem', fontSize: '0.85rem' }}>
+        <div className="footer-copyright" style={{ borderTop: '1px solid #374151', paddingTop: '1.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.5rem', fontSize: '0.85rem' }}>
           <span>© 2025 Ferretería Salcedo. Todos los derechos reservados.</span>
           <span style={{ color: '#6B7280' }}>Hecho con ❤️ en Lima, Perú 🇵🇪</span>
         </div>

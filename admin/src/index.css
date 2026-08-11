@@ -61,6 +61,10 @@ input:focus, select:focus, textarea:focus { border-color: var(--primario); }
 .admin-sidebar { width: var(--sidebar-w); background: var(--sidebar-bg); color: white; display: flex; flex-direction: column; position: fixed; top: 0; left: 0; height: 100vh; z-index: 50; transition: transform .25s ease; }
 .admin-content { margin-left: var(--sidebar-w); flex: 1; padding: 2rem; min-width: 0; min-height: 100vh; }
 .admin-menu-toggle { display: none; }
+.dashboard-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+.admin-page-header { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+.admin-filter-row { display: flex; gap: .5rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+.admin-modal-actions { display: flex; gap: .75rem; }
 
 @media (max-width: 900px) {
   :root { --sidebar-w: 260px; }
@@ -71,6 +75,12 @@ input:focus, select:focus, textarea:focus { border-color: var(--primario); }
   .admin-content h1 { font-size: 1.65rem !important; }
   .card { padding: 1rem; overflow-x: auto; }
   .card table { min-width: 720px; }
+  .dashboard-columns { grid-template-columns: 1fr; gap: 1rem; }
+  .admin-page-header { align-items: flex-start; flex-direction: column; }
+  .admin-page-header .btn { width: 100%; justify-content: center; }
+  .admin-modal-content { padding: 1.25rem !important; border-radius: 10px !important; }
+  .admin-modal-actions { flex-direction: column; }
+  .admin-modal-actions .btn { width: 100%; }
 }
 
 @media (max-width: 520px) {
@@ -79,4 +89,20 @@ input:focus, select:focus, textarea:focus { border-color: var(--primario); }
   th, td { padding: .65rem .75rem; }
   .admin-content form [style*="grid-template-columns"] { grid-template-columns: 1fr !important; }
   .admin-content [style*="justify-content: space-between"] { gap: .75rem; flex-wrap: wrap; }
+  .admin-filter-row .btn { flex: 1 1 auto; }
+}
+
+/* ── Admin responsive utilities ───────────────────────── */
+.grid-2-admin { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+.stats-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; }
+.page-header-row { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem; }
+
+@media (max-width: 900px) {
+  .grid-2-admin { grid-template-columns: 1fr; }
+  .stats-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+}
+
+@media (max-width: 520px) {
+  .stats-grid { grid-template-columns: 1fr 1fr; }
+  .page-header-row { flex-direction: column; align-items: flex-start; }
 }
