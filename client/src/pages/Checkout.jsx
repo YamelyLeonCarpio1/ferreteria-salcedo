@@ -75,13 +75,16 @@ function TerminosCheck({ aceptado, onChange }) {
 }
 
 const WA_NUMERO = '51987654321'
+// La pasarela de pruebas permanece implementada, pero se oculta por defecto.
+// Para volver a mostrarla, define VITE_SHOW_PAYMENT_DEMO=true al desplegar el cliente.
+const MOSTRAR_PASARELA_PRUEBA = import.meta.env.VITE_SHOW_PAYMENT_DEMO === 'true'
 
 export default function Checkout() {
   const { items, total, vaciar } = useCarrito()
   const { usuario } = useAuth()
   const navigate = useNavigate()
 
-  const [metodoPago, setMetodoPago]         = useState('MERCADOPAGO')
+  const [metodoPago, setMetodoPago]         = useState('YAPE')
   const [tipoEntrega, setTipoEntrega]       = useState('DELIVERY')
   const [direccion, setDireccion]           = useState({ calle: '', distrito: '', referencia: '' })
   const [distritoSeleccionado, setDistritoSeleccionado] = useState(null)
@@ -246,7 +249,7 @@ export default function Checkout() {
         Pedido #{pedidoCreado?.id} — Total: <strong style={{ color: '#E63946' }}>S/ {Number(pedidoCreado?.total).toFixed(2)}</strong>
       </p>
 
-      {metodoPago === 'MERCADOPAGO' && (
+      {MOSTRAR_PASARELA_PRUEBA && metodoPago === 'MERCADOPAGO' && (
         <div className="gateway-card" style={{ background: 'white', border: '1px solid #E5E7EB', borderRadius: '12px', padding: '1.5rem', marginBottom: '1rem' }}>
           <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'flex-start', marginBottom: '1rem' }}>
             <div style={{ background: '#E8F3FF', color: '#009EE3', padding: '0.7rem', borderRadius: '10px' }}><CreditCard size={24} /></div>
@@ -459,7 +462,11 @@ export default function Checkout() {
             <div className="payment-methods" style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
 
               {/* Yape — siempre disponible */}
-              {[['MERCADOPAGO','💳 Pasarela de prueba'],['YAPE','💜 Yape'],['TRANSFERENCIA','🏦 Transferencia']].map(([v,l]) => (
+              {[
+                ...(MOSTRAR_PASARELA_PRUEBA ? [['MERCADOPAGO','💳 Pasarela de prueba']] : []),
+                ['YAPE','💜 Yape'],
+                ['TRANSFERENCIA','🏦 Transferencia']
+              ].map(([v,l]) => (
                 <label key={v} style={{ flex: 1, minWidth: '130px', border: `2px solid ${metodoPago===v?'#E63946':'#E5E7EB'}`, borderRadius: '8px', padding: '1rem', cursor: 'pointer', background: metodoPago===v?'#FEF2F2':'white', textAlign: 'center', fontWeight: 600 }}>
                   <input type="radio" value={v} checked={metodoPago===v} onChange={() => setMetodoPago(v)} style={{ display: 'none' }} />
                   {l}
@@ -478,7 +485,7 @@ export default function Checkout() {
 
             <p style={{ fontSize: '0.82rem', color: '#6B7280', marginTop: '0.8rem' }}>
               {metodoPago === 'YAPE' && '💜 Después de confirmar verás el número y QR para yapear'}
-              {metodoPago === 'MERCADOPAGO' && '💳 Pasarela de prueba: simula resultados sin dinero real'}
+              {MOSTRAR_PASARELA_PRUEBA && metodoPago === 'MERCADOPAGO' && '💳 Pasarela de prueba: simula resultados sin dinero real'}
               {metodoPago === 'EFECTIVO' && '💵 Pagas al recoger en nuestra tienda. Se reserva 24 horas.'}
               {metodoPago === 'TRANSFERENCIA' && '🏦 Te mostraremos los datos bancarios para transferir'}
             </p>
