@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import axios from 'axios'
+import axios from '../lib/axios'
 import { ShoppingCart, ArrowLeft, Star, Package } from 'lucide-react'
 import { useCarrito } from '../context/CarritoContext'
 import toast from 'react-hot-toast'
@@ -17,7 +17,10 @@ export default function Producto() {
   useEffect(() => {
     setCargando(true)
     axios.get(`/api/productos/${id}`)
-      .then(r => setProducto(r.data))
+      .then(r => {
+        if (!r.data?.id || r.data?.precio == null) throw new Error('Producto inválido')
+        setProducto(r.data)
+      })
       .catch(() => navigate('/productos'))
       .finally(() => setCargando(false))
   }, [id])
