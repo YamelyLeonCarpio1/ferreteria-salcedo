@@ -6,12 +6,19 @@ const app = express()
 
 // Middlewares
 app.use(cors({
-  origin: [
-    process.env.CLIENT_URL,
-    process.env.ADMIN_URL,
-    'http://localhost:5173',
-    'http://localhost:5174'
-  ],
+  origin: function(origin, callback) {
+    const allowed = [
+      process.env.CLIENT_URL,
+      process.env.ADMIN_URL,
+      'http://localhost:5173',
+      'http://localhost:5174'
+    ]
+    if (!origin || allowed.includes(origin)) {
+      callback(null, true)
+    } else {
+      callback(new Error('No permitido por CORS'))
+    }
+  },
   credentials: true
 }))
 app.use(express.json())
