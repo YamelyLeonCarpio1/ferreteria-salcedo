@@ -30,22 +30,22 @@ export default function Navbar() {
   return (
     <>
       {/* Barra superior */}
-      <div style={{ background: '#1A1A2E', color: '#FFB703', padding: '0.4rem 0', fontSize: '0.82rem', textAlign: 'center' }}>
+      <div className="topbar">
         📍 Jr. Los Artesanos 245, Lima — 📞 916-312-463 — Lun-Sáb 8am-7pm
       </div>
 
       {/* Navbar principal */}
-      <nav style={{ background: '#E63946', padding: '0.8rem 0', position: 'sticky', top: 0, zIndex: 100, boxShadow: '0 2px 8px rgba(0,0,0,0.2)' }}>
-        <div className="contenedor" style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
+      <nav className="site-nav">
+        <div className="contenedor nav-main">
 
           {/* Logo */}
-          <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'white', fontFamily: "'Barlow Condensed', sans-serif", fontSize: '1.6rem', fontWeight: 800, letterSpacing: '0.5px', flexShrink: 0 }}>
+          <Link to="/" className="nav-brand">
             <Wrench size={26} />
             FERRETERÍA<span style={{ color: '#FFB703' }}>SALCEDO</span>
           </Link>
 
           {/* Buscador */}
-          <form onSubmit={handleBuscar} style={{ flex: 1, display: 'flex', maxWidth: '500px' }}>
+          <form onSubmit={handleBuscar} className="nav-search">
             <input
               value={buscar}
               onChange={e => setBuscar(e.target.value)}
@@ -58,7 +58,7 @@ export default function Navbar() {
           </form>
 
           {/* Acciones */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginLeft: 'auto' }}>
+          <div className="nav-actions">
             {usuario ? (
               <div style={{ position: 'relative', color: 'white' }}>
                 <button onClick={() => setMenuAbierto(!menuAbierto)} style={{ background: 'none', border: 'none', color: 'white', display: 'flex', alignItems: 'center', gap: '0.4rem', fontWeight: 600 }}>
@@ -86,7 +86,7 @@ export default function Navbar() {
         </div>
 
         {/* Categorías dinámicas */}
-        <div className="contenedor" style={{ marginTop: '0.5rem', display: 'flex', gap: '1.5rem', overflowX: 'auto', paddingBottom: '0.2rem' }}>
+        <div className="contenedor nav-categories">
           <Link to="/productos" style={{ color: 'rgba(255,255,255,0.85)', fontSize: '0.85rem', fontWeight: 700, whiteSpace: 'nowrap' }}>
             Todos
           </Link>

@@ -1,8 +1,9 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useAdminAuth } from '../context/AdminAuthContext'
+import { useState } from 'react'
 import {
   LayoutDashboard, ShoppingBag, Package,
-  Users, CreditCard, LogOut, Wrench, Tag
+  Users, CreditCard, LogOut, Wrench, Tag, Menu, X
 } from 'lucide-react'
 
 const MENU = [
@@ -18,14 +19,19 @@ export default function Layout({ children }) {
   const { admin, logout } = useAdminAuth()
   const { pathname } = useLocation()
   const navigate = useNavigate()
+  const [menuAbierto, setMenuAbierto] = useState(false)
 
   const handleLogout = () => { logout(); navigate('/login') }
 
   return (
-    <div style={{ display: 'flex', minHeight: '100vh' }}>
+    <div className="admin-shell">
+
+      <button className="admin-menu-toggle" onClick={() => setMenuAbierto(v => !v)} aria-label="Abrir menú de administración">
+        {menuAbierto ? <X size={22} /> : <Menu size={22} />}
+      </button>
 
       {/* Sidebar */}
-      <aside style={{ width: 'var(--sidebar-w)', background: 'var(--sidebar-bg)', color: 'white', display: 'flex', flexDirection: 'column', position: 'fixed', top: 0, left: 0, height: '100vh', zIndex: 50 }}>
+      <aside className={`admin-sidebar ${menuAbierto ? 'is-open' : ''}`}>
 
         {/* Logo */}
         <div style={{ padding: '1.5rem 1.2rem', borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
@@ -44,7 +50,7 @@ export default function Layout({ children }) {
           {MENU.map(item => {
             const activo = pathname === item.path
             return (
-              <Link key={item.path} to={item.path}
+              <Link key={item.path} to={item.path} onClick={() => setMenuAbierto(false)}
                 style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '0.7rem 0.9rem', borderRadius: '8px', marginBottom: '0.2rem', fontWeight: 600, fontSize: '0.88rem', background: activo ? 'rgba(230,57,70,0.15)' : 'transparent', color: activo ? '#E63946' : '#94A3B8', transition: 'all 0.15s' }}
                 onMouseEnter={e => { if (!activo) e.currentTarget.style.background = 'rgba(255,255,255,0.05)'; e.currentTarget.style.color = 'white' }}
                 onMouseLeave={e => { if (!activo) { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = '#94A3B8' } }}>
@@ -65,7 +71,7 @@ export default function Layout({ children }) {
       </aside>
 
       {/* Contenido */}
-      <main style={{ marginLeft: 'var(--sidebar-w)', flex: 1, padding: '2rem', minHeight: '100vh' }}>
+      <main className="admin-content">
         {children}
       </main>
     </div>
