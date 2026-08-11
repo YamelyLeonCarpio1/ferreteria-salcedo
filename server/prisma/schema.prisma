@@ -152,6 +152,7 @@ enum MetodoPago {
   YAPE
   EFECTIVO
   TRANSFERENCIA
+  MERCADOPAGO
 }
 
 enum EstadoPago {

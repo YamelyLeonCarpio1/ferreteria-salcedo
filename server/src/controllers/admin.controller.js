@@ -97,8 +97,9 @@ const verificarPago = async (req, res) => {
     const { accion, notas } = req.body // accion: 'VERIFICAR' o 'RECHAZAR'
     const pedidoId = parseInt(req.params.id)
 
-    const estadoPago  = accion === 'VERIFICAR' ? 'VERIFICADO' : 'RECHAZADO'
-    const estadoPedido = accion === 'VERIFICAR' ? 'PAGO_VERIFICADO' : 'CANCELADO'
+    const aprobado = accion === 'VERIFICAR' || accion === 'VERIFICADO'
+    const estadoPago  = aprobado ? 'VERIFICADO' : 'RECHAZADO'
+    const estadoPedido = aprobado ? 'PAGO_VERIFICADO' : 'CANCELADO'
 
     await prisma.$transaction([
       prisma.pago.update({

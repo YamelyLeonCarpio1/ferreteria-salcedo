@@ -4,7 +4,7 @@ import { useAuth } from '../context/AuthContext'
 import { useNavigate, Link } from 'react-router-dom'
 import axios from '../lib/axios'
 import toast from 'react-hot-toast'
-import { Upload, CheckCircle, MapPin } from 'lucide-react'
+import { Upload, CheckCircle, MapPin, CreditCard, ShieldCheck } from 'lucide-react'
 
 // ── Distritos de Lima con costos de delivery ─────────────
 const DISTRITOS = [
@@ -81,7 +81,7 @@ export default function Checkout() {
   const { usuario } = useAuth()
   const navigate = useNavigate()
 
-  const [metodoPago, setMetodoPago]         = useState('YAPE')
+  const [metodoPago, setMetodoPago]         = useState('MERCADOPAGO')
   const [tipoEntrega, setTipoEntrega]       = useState('DELIVERY')
   const [direccion, setDireccion]           = useState({ calle: '', distrito: '', referencia: '' })
   const [distritoSeleccionado, setDistritoSeleccionado] = useState(null)
@@ -91,6 +91,7 @@ export default function Checkout() {
   const [pedidoCreado, setPedidoCreado]     = useState(null)
   const [paso, setPaso]                     = useState(1)
   const [aceptoTerminos, setAceptoTerminos] = useState(false)
+  const [modoPasarela, setModoPasarela]     = useState(null)
 
   // Si cambia a DELIVERY, resetear efectivo
   useEffect(() => {
@@ -172,6 +173,38 @@ export default function Checkout() {
     finally { setCargando(false) }
   }
 
+  const iniciarPasarela = async () => {
+    setCargando(true)
+    try {
+      const r = await axios.post(`/api/pagos/mercadopago/preferencia/${pedidoCreado.id}`)
+      if (r.data.modo === 'DEMO') {
+        setModoPasarela('DEMO')
+      } else if (r.data.initPoint) {
+        window.location.assign(r.data.initPoint)
+      } else {
+        toast.error('No se pudo iniciar la pasarela de pagos')
+      }
+    } catch (e) {
+      toast.error(e.response?.data?.error || 'No se pudo iniciar la pasarela')
+    } finally { setCargando(false) }
+  }
+
+  const simularPago = async (resultado) => {
+    setCargando(true)
+    try {
+      await axios.post(`/api/pagos/mercadopago/simular/${pedidoCreado.id}`, { resultado })
+      if (resultado === 'APROBADO') {
+        vaciar()
+        setPaso(3)
+        toast.success('Pago de prueba aprobado')
+      } else {
+        toast(resultado === 'RECHAZADO' ? 'Pago de prueba rechazado' : 'Pago de prueba pendiente', { icon: 'ℹ️' })
+      }
+    } catch (e) {
+      toast.error(e.response?.data?.error || 'No se pudo registrar la simulación')
+    } finally { setCargando(false) }
+  }
+
   // ── PASO 3 ───────────────────────────────────────────────
   if (paso === 3) return (
     <div className="contenedor" style={{ padding: '3rem 1.5rem', maxWidth: '550px', margin: '0 auto', textAlign: 'center' }}>
@@ -212,6 +245,40 @@ export default function Checkout() {
       <p style={{ color: '#6B7280', marginBottom: '1.5rem' }}>
         Pedido #{pedidoCreado?.id} — Total: <strong style={{ color: '#E63946' }}>S/ {Number(pedidoCreado?.total).toFixed(2)}</strong>
       </p>
+
+      {metodoPago === 'MERCADOPAGO' && (
+        <div className="gateway-card" style={{ background: 'white', border: '1px solid #E5E7EB', borderRadius: '12px', padding: '1.5rem', marginBottom: '1rem' }}>
+          <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'flex-start', marginBottom: '1rem' }}>
+            <div style={{ background: '#E8F3FF', color: '#009EE3', padding: '0.7rem', borderRadius: '10px' }}><CreditCard size={24} /></div>
+            <div>
+              <h3 style={{ fontWeight: 800, color: '#009EE3', fontSize: '1.15rem', marginBottom: '0.2rem' }}>Pasarela de pagos - Mercado Pago</h3>
+              <p style={{ fontSize: '0.85rem', color: '#6B7280', lineHeight: 1.45 }}>Checkout externo: la tienda no solicita ni guarda los datos de tu tarjeta.</p>
+            </div>
+          </div>
+
+          {!modoPasarela ? (
+            <>
+              <div style={{ background: '#FFF8E1', border: '1px solid #FDE68A', borderRadius: '8px', padding: '0.9rem', fontSize: '0.84rem', color: '#92400E', marginBottom: '1rem' }}>
+                <strong>Modo de pruebas.</strong> No se realizará ningún cobro real. Puedes simular un pago aprobado, pendiente o rechazado.
+              </div>
+              <button onClick={iniciarPasarela} disabled={cargando} style={{ width: '100%', padding: '1rem', background: '#009EE3', color: 'white', border: 'none', borderRadius: '8px', fontWeight: 700, fontSize: '1rem' }}>
+                {cargando ? 'Iniciando...' : 'Ir a la pasarela de pruebas'}
+              </button>
+            </>
+          ) : (
+            <>
+              <div style={{ background: '#F0FDF4', border: '1px solid #BBF7D0', borderRadius: '8px', padding: '0.9rem', fontSize: '0.84rem', color: '#065F46', marginBottom: '1rem', display: 'flex', gap: '0.5rem' }}>
+                <ShieldCheck size={18} style={{ flexShrink: 0 }} /> <span><strong>Simulador activo.</strong> Selecciona un resultado para probar el flujo sin dinero real.</span>
+              </div>
+              <div className="gateway-actions" style={{ display: 'flex', gap: '0.75rem' }}>
+                <button onClick={() => simularPago('APROBADO')} disabled={cargando} className="btn-primario" style={{ flex: 1, background: '#10B981' }}>Simular aprobado</button>
+                <button onClick={() => simularPago('PENDIENTE')} disabled={cargando} className="btn-secundario" style={{ flex: 1, color: '#B45309', borderColor: '#F59E0B' }}>Simular pendiente</button>
+                <button onClick={() => simularPago('RECHAZADO')} disabled={cargando} style={{ flex: 1, padding: '0.75rem', background: '#FEE2E2', color: '#B91C1C', border: '1px solid #FCA5A5', borderRadius: '6px', fontWeight: 700 }}>Simular rechazo</button>
+              </div>
+            </>
+          )}
+        </div>
+      )}
 
       {metodoPago === 'YAPE' && (
         <div style={{ background: 'white', border: '1px solid #E5E7EB', borderRadius: '12px', padding: '1.5rem', marginBottom: '1rem' }}>
@@ -392,7 +459,7 @@ export default function Checkout() {
             <div className="payment-methods" style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
 
               {/* Yape — siempre disponible */}
-              {[['YAPE','💜 Yape'],['TRANSFERENCIA','🏦 Transferencia']].map(([v,l]) => (
+              {[['MERCADOPAGO','💳 Pasarela de prueba'],['YAPE','💜 Yape'],['TRANSFERENCIA','🏦 Transferencia']].map(([v,l]) => (
                 <label key={v} style={{ flex: 1, minWidth: '130px', border: `2px solid ${metodoPago===v?'#E63946':'#E5E7EB'}`, borderRadius: '8px', padding: '1rem', cursor: 'pointer', background: metodoPago===v?'#FEF2F2':'white', textAlign: 'center', fontWeight: 600 }}>
                   <input type="radio" value={v} checked={metodoPago===v} onChange={() => setMetodoPago(v)} style={{ display: 'none' }} />
                   {l}
@@ -411,6 +478,7 @@ export default function Checkout() {
 
             <p style={{ fontSize: '0.82rem', color: '#6B7280', marginTop: '0.8rem' }}>
               {metodoPago === 'YAPE' && '💜 Después de confirmar verás el número y QR para yapear'}
+              {metodoPago === 'MERCADOPAGO' && '💳 Pasarela de prueba: simula resultados sin dinero real'}
               {metodoPago === 'EFECTIVO' && '💵 Pagas al recoger en nuestra tienda. Se reserva 24 horas.'}
               {metodoPago === 'TRANSFERENCIA' && '🏦 Te mostraremos los datos bancarios para transferir'}
             </p>

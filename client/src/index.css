@@ -178,6 +178,8 @@ img { max-width: 100%; }
   .product-thumbnails button { flex: 0 0 auto; }
   .payment-methods { flex-direction: column; }
   .payment-methods label { width: 100%; min-width: 0 !important; }
+  .gateway-actions { flex-direction: column; }
+  .gateway-actions button { width: 100%; min-height: 44px; }
   .contenedor table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
 }
 
